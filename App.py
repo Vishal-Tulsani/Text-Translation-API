@@ -13,25 +13,29 @@ def summarizer():
       'translate.google.com',
       'translate.google.co.kr',
     ])
-    
+
+    token = request.args.get('token')
     encoded_input_text = request.args.get('text')
     text_dest = request.args.get('dest')
 
-    uncoded_input_text = unquote(encoded_input_text)
+    if token == 'c0ncret10':
+        uncoded_input_text = unquote(encoded_input_text)
 
-    clean_input_text = uncoded_input_text.strip('\n')
+        clean_input_text = uncoded_input_text.strip('\n')
 
-    input_text_list = clean_input_text.split('#')
+        input_text_list = clean_input_text.split('#')
 
-    translations = translator.translate(input_text_list, dest=text_dest)
+        translations = translator.translate(input_text_list, dest=text_dest)
 
-    output_text = ''
+        output_text = ''
 
-    for translation in translations:
-        output_text = output_text + translation.text + '$'
+        for translation in translations:
+            output_text = output_text + translation.text + '$'
         
-    return output_text
+        return output_text
+    else:
+        return 'Please Enter the correct Token'
 
 
 if __name__ == '__main__':
-    app.run(port = 5000, debug=True)
+    app.run()
